@@ -37,28 +37,60 @@ FEATURES_NUMERICAS = [
 
 
 def carregar_dados_treinamento():
-    """Carrega os alunos das redes públicas avaliados em 2023."""
+    """Carrega os dados de 2023 para treinamento supervisionado."""
 
-    colunas = ["ano", "alfabetizado"] + FEATURES
+    # Verifica se a base Gold está disponível.
+    if not CAMINHO_DADOS.is_file():
+        raise FileNotFoundError(
+            f"Base analítica não encontrada: {CAMINHO_DADOS}"
+        )
 
+    # Seleciona apenas as colunas necessárias.
+    colunas = list(dict.fromkeys(
+        ["ano", "alfabetizado"] + FEATURES
+    ))
+
+    # Aplica os filtros durante a leitura do Parquet.
+    # Isso evita carregar os dados de 2024 na memória.
     dados = pd.read_parquet(
         CAMINHO_DADOS,
         columns=colunas,
+        filters=[
+            ("ano", "==", 2023),
+            ("rede_codigo", "in", ["2", "3"]),
+        ],
     )
 
-    # Mantém apenas 2023 e as redes estadual e municipal.
-    dados = dados.loc[
-        (dados["ano"] == 2023)
-        & (dados["rede_codigo"].isin(["2", "3"]))
-    ].copy()
-
+    # Verifica se existem registros.
     if dados.empty:
         raise ValueError(
-            "Nenhum registro válido de treinamento encontrado."
+            "Nenhum registro encontrado para treinamento em 2023."
         )
 
-    X = dados[FEATURES].copy()
-    y = dados["alfabetizado"].copy()
+    # Verifica se a variável-alvo está preenchida.
+    if dados["alfabetizado"].isna().any():
+        raise ValueError(
+            "A variável-alvo contém valores ausentes."
+        )
+
+    # Confirma que estamos trabalhando com classificação binária.
+    classes = set(dados["alfabetizado"].unique())
+
+    if classes != {0, 1}:
+        raise ValueError(
+            f"Classes inesperadas na variável-alvo: {classes}"
+        )
+
+    # Separa as variáveis explicativas e o alvo.
+    X = dados[FEATURES]
+    y = dados["alfabetizado"]
+
+    print("DADOS DE TREINAMENTO")
+    print("Ano: 2023")
+    print("Registros:", len(dados))
+    print("Features:", len(FEATURES))
+    print("Distribuição das classes:")
+    print(y.value_counts().to_string())
 
     return X, y
 

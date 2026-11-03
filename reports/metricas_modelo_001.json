@@ -1,0 +1,22 @@
+{
+  "modelo": "modelo_001",
+  "ano_treino": 2023,
+  "ano_teste": 2024,
+  "accuracy": 0.606748574921645,
+  "balanced_accuracy": 0.5315446770430013,
+  "roc_auc": 0.5905694723547417,
+  "average_precision": 0.48325446132044836,
+  "precision_nao_alfabetizado": 0.5406560788122933,
+  "recall_nao_alfabetizado": 0.1472368995266709,
+  "f1_nao_alfabetizado": 0.23144450448320697,
+  "precision_alfabetizado": 0.61487722685697,
+  "recall_alfabetizado": 0.9158524545593318,
+  "f1_alfabetizado": 0.7357756556318302,
+  "specificity_nao_alfabetizado": 0.9158524545593318,
+  "prevalencia_nao_alfabetizado": 0.40215667977803554,
+  "tp": 109651,
+  "fn": 635074,
+  "fp": 93160,
+  "tn": 1013943,
+  "registros": 1851828
+}

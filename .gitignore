@@ -9,7 +9,7 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-# Variáveis de ambiente
+# Variáveis de ambiente e credenciais
 .env
 .env.*
 
@@ -17,13 +17,8 @@ __pycache__/
 .vscode/
 .DS_Store
 
-# Dados
-data/**/*.parquet
-data/**/*.csv
-data/**/*.csv.gz
-
-# Modelos treinados
-*.joblib
+# Dados Parquet
+*.parquet
 
 # Arquivos temporários
 *.log
