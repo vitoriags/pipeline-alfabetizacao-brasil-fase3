@@ -1,0 +1,29 @@
+# Ambiente virtual
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Variáveis de ambiente
+.env
+.env.*
+
+# Configurações locais
+.vscode/
+.DS_Store
+
+# Dados
+data/**/*.parquet
+data/**/*.csv
+data/**/*.csv.gz
+
+# Modelos treinados
+*.joblib
+
+# Arquivos temporários
+*.log
